@@ -2,35 +2,21 @@
 
 set -e
 
-# check values
-if [ -n "${PUBLISH_REPOSITORY}" ]; then
-    PRO_REPOSITORY=${PUBLISH_REPOSITORY}
-else
-    PRO_REPOSITORY=${GITHUB_REPOSITORY}
-fi
-
-if [ -z "$PUBLISH_DIR" ]
+# set default value
+if [ -z "${PUBLISH_DIR}" ]
 then
-  echo "You must provide the action with the folder path in the repository where your compiled page generate at, example public."
-  exit 1
+  PUBLISH_DIR="./public"
 fi
 
-if [ -z "$BRANCH" ]
+if [ -z "${BRANCH}" ]
 then
-  echo "You must provide the action with a branch name it should deploy to, for example master."
-  exit 1
+  BRANCH="gh_pages"
 fi
 
-if [ -z "$PERSONAL_TOKEN" ]
-then
-  echo "You must provide the action with either a Personal Access Token or the GitHub Token secret in order to deploy."
-  exit 1
-fi
-
-REPOSITORY_PATH="https://x-access-token:${PERSONAL_TOKEN}@github.com/${PRO_REPOSITORY}.git"
+REPOSITORY_PATH="https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
 
 # deploy to 
-echo "Deploy to ${PRO_REPOSITORY}"
+echo "Deploy to ${GITHUB_REPOSITORY}"
 
 # Directs the action to the the Github workspace.
 cd $GITHUB_WORKSPACE 
