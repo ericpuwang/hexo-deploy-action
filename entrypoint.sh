@@ -19,7 +19,11 @@ REPOSITORY_PATH="https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPO
 echo "Deploy to ${GITHUB_REPOSITORY}"
 
 # Directs the action to the the Github workspace.
-cd $GITHUB_WORKSPACE 
+cd $GITHUB_WORKSPACE
+
+echo "apt install"
+apt update -y
+apt-get install -y pandoc
 
 echo "npm install ..." 
 npm install
