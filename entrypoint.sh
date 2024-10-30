@@ -45,20 +45,16 @@ git config user.name "${GITHUB_ACTOR}"
 git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
 git remote add origin "${REPOSITORY_PATH}"
 
-# Checks to see if the remote exists prior to deploying.
-# If the branch doesn't exist it gets created here as an orphan.
-# if [ "$(git ls-remote --heads "$REPOSITORY_PATH" "$BRANCH" | wc -l)" -eq 0 ];
-# then
-#   echo "Creating remote branch ${BRANCH} as it doesn't exist..."
-#   git checkout --orphan $BRANCH
-# fi
+# Get the commit message
+GIT_COMMIT_MSG=$(git log -1 --pretty=%B)
 
 git checkout --orphan $BRANCH
 
 git add --all
 
 echo 'Start Commit'
-git commit --allow-empty -m "Deploying to ${BRANCH}"
+
+git commit --allow-empty -m "${GIT_COMMIT_MSG}"
 
 echo 'Start Push'
 git push origin "${BRANCH}" --force
