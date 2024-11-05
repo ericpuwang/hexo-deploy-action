@@ -40,21 +40,16 @@ cd $PUBLISH_DIR
 echo "Config git ..."
 
 # Configures Git.
+git config --global init.defaultBranch ${BRANCH}
 git init
 git config user.name "${GITHUB_ACTOR}"
 git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
 git remote add origin "${REPOSITORY_PATH}"
 
-# Get the commit message
-GIT_COMMIT_MSG=$(git log -1 --pretty=%B)
-
-git checkout --orphan $BRANCH
-
 git add --all
 
 echo 'Start Commit'
-
-git commit --allow-empty -m "${GIT_COMMIT_MSG}"
+git commit --allow-empty -m "Deploying to ${BRANCH}"
 
 echo 'Start Push'
 git push origin "${BRANCH}" --force
