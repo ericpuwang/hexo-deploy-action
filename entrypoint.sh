@@ -33,7 +33,10 @@ echo "Clean folder ..."
 ./node_modules/hexo/bin/hexo clean
 
 echo "Generate file ..."
-./node_modules/hexo/bin/hexo generate 
+./node_modules/hexo/bin/hexo generate
+
+echo "Get Commit Message ..."
+GIT_COMMIT_MSG=$(git log --pretty=format:"%s" -1)
 
 cd $PUBLISH_DIR
 
@@ -49,7 +52,7 @@ git remote add origin "${REPOSITORY_PATH}"
 git add --all
 
 echo 'Start Commit'
-git commit --allow-empty -m "Deploying to ${BRANCH}"
+git commit --allow-empty -m "$GIT_COMMIT_MSG"
 
 echo 'Start Push'
 git push origin "${BRANCH}" --force
