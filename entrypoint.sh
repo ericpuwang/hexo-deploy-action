@@ -36,6 +36,7 @@ echo "Generate file ..."
 ./node_modules/hexo/bin/hexo generate
 
 echo "Get Commit Message ..."
+git config --global --add safe.directory $PWD
 GIT_COMMIT_MSG=$(git log --pretty=format:"%s" -1)
 
 cd $PUBLISH_DIR
